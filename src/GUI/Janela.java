@@ -6,7 +6,7 @@
 package GUI;
 
 import Funções.Logistica;
-import Neuronio.Instancias;
+import Instancias.Instancias;
 import Neuronio.RedeNeural;
 import java.io.File;
 import javax.swing.JFileChooser;

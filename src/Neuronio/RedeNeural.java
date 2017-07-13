@@ -6,6 +6,7 @@
 
 package Neuronio;
 
+import Instancias.Instancias;
 import Funções.Função;
 import Funções.Logistica;
 import java.io.BufferedReader;

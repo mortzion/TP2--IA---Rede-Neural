@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package Neuronio;
+package Instancias;
 
+import Instancias.Instancia;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,10 +1,12 @@
+package Instancias;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-package Neuronio;
+
 
 /**
  * Representa uma instancia de dados com os atributos e o rotulo da classe
