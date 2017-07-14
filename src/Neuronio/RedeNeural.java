@@ -111,16 +111,14 @@ public class RedeNeural {
     public void treinamento(Instancias instancias){
         boolean houveErro;
         double maiorErro;
+        instancias.definirSaidasClasses(funçãoPropagação);
         for(int i=0;i<numIteraçõesLimite;i++){
             houveErro = false;
-            maiorErro = 0;
             double erroAtual;
             for(int j=0;j<instancias.size();j++){
                 erroAtual=iteration(instancias.getAtributos(j),instancias.getSaida(j));
-                if(erroAtual > maiorErro)maiorErro = erroAtual;
                 if(erroAtual > limiar)houveErro = true;
             }
-            //System.out.println(i + " - " + maiorErro);
             if(!houveErro)return;
         }
         
@@ -128,6 +126,7 @@ public class RedeNeural {
     //arrumar
     public int[][] testarRede(Instancias instancias){
         int numClasses = instancias.getNumClasses();
+        instancias.definirSaidasClasses(funçãoPropagação);
         int[][] matrizConfusão = new int[numClasses][numClasses];
         for(int i=0;i<numClasses;i++){
             for(int j=0;j<numClasses;j++){

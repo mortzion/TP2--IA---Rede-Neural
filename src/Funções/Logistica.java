@@ -21,4 +21,14 @@ public class Logistica extends Função{
     public double derivada(double x) {
         return compute(x)*(1-compute(x));
     }
+
+    @Override
+    public double menorValorImagem() {
+        return 0;
+    }
+
+    @Override
+    public double maiorValorImagem() {
+        return 1;
+    }
 }

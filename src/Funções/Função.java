@@ -14,4 +14,8 @@ public abstract class Função {
     public abstract double compute(double x);
     /**Calcula f'(x)*/
     public abstract double derivada(double x);
+    
+    public abstract double menorValorImagem();
+    
+    public abstract double maiorValorImagem();
 }

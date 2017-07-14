@@ -6,6 +6,7 @@
 
 package Instancias;
 
+import Funções.Função;
 import Instancias.Instancia;
 import java.io.BufferedReader;
 import java.io.File;
@@ -98,7 +99,6 @@ public class Instancias {
                 mapeamentoSaidas.putIfAbsent(classe,null);
             }
             numClasses = mapeamentoSaidas.size();
-            definirSaidasClasses();
             reader.close();
         } catch (IOException ex ) {
             instancias.clear();
@@ -141,15 +141,15 @@ public class Instancias {
         }
     }
 
-    private void definirSaidasClasses() {
+    public void definirSaidasClasses(Função funçãoPropagação) {
         Set<String> valorClasses = mapeamentoSaidas.keySet();
         int cont=0;
         for(String i : valorClasses){
             Double[] saidaClasses = new Double[numAtributos];
             for(int j=0;j<numAtributos;j++){
-                saidaClasses[j] = 0.0d;
+                saidaClasses[j] = funçãoPropagação.menorValorImagem();
             }
-            saidaClasses[cont++] = 1.0d;
+            saidaClasses[cont++] = funçãoPropagação.maiorValorImagem();
             mapeamentoSaidas.put(i, saidaClasses);
             classes.add(i);
         }
@@ -188,6 +188,5 @@ public class Instancias {
         }
         return retorno;
     }
-
     
 }
