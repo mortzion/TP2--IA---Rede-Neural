@@ -124,6 +124,10 @@ public class CamadaProcessamento {
         return soma/2;
     }
 
+    public double[] getPesos(int neuronio) {
+        return neuronios[neuronio].pesos;
+    }
+
     
     
 }

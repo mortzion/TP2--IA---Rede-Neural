@@ -165,28 +165,6 @@ public class RedeNeural {
     private double erroRede() {
         return saida.erroRede();
     }
-    
-    
-    
-    public static void main(String[] args) throws FileNotFoundException, IOException{
-        Instancias instancias = new Instancias();
-        instancias.abrirArquivo(new File("C:\\Users\\mortz\\Documents\\Faculdade ( too late my friend)\\4ºAno-1ºSemestre\\IA\\Treinamento e Teste\\treinamento.csv"));
-        instancias.embaralhar();
-        instancias.normalizar(Instancias.NORMALIZAR_ENTRE_M1E1);
-        RedeNeural r = new RedeNeural(6,6,1,5,new Logistica());
-        r.treinamento(instancias);
-        
-        Instancias teste = new Instancias();
-        teste.abrirArquivo(new File("C:\\Users\\mortz\\Documents\\Faculdade ( too late my friend)\\4ºAno-1ºSemestre\\IA\\Treinamento e Teste\\teste.csv"));
-        teste.normalizar(Instancias.NORMALIZAR_ENTRE_M1E1);
-        int[][] matriz = r.testarRede(teste);
-        for(int i=0;i<matriz.length;i++){
-            for(int j=0;j<matriz[i].length;j++){
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println("");
-        }
-    }
 
     private int indexMaiorSinalSaida(double[] saida) {
         int pos=0;
@@ -200,5 +178,36 @@ public class RedeNeural {
         return pos;
     }
 
+    public double[] getPesos(int camada, int neuronio) {
+        if(oculta.length == camada) return saida.getPesos(neuronio);
+        return oculta[camada].getPesos(neuronio);
+    }
+
+    public double getTaxaAprendizado() {
+        return taxaAprendizado;
+    }
+
+    public void setTaxaAprendizado(double taxaAprendizado) {
+        this.taxaAprendizado = taxaAprendizado;
+    }
+
+    public int getNumIteraçõesLimite() {
+        return numIteraçõesLimite;
+    }
+
+    public void setNumIteraçõesLimite(int numIteraçõesLimite) {
+        this.numIteraçõesLimite = numIteraçõesLimite;
+    }
+
+    public double getLimiar() {
+        return limiar;
+    }
+
+    public void setLimiar(double limiar) {
+        this.limiar = limiar;
+    }
+
+    
+    
 
 }

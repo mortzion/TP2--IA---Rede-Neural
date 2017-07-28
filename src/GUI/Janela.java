@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Funções.Função;
 import Funções.Logistica;
 import Instancias.Instancias;
 import Neuronio.RedeNeural;
@@ -18,13 +19,22 @@ import javax.swing.JTextField;
  * @author mortz
  */
 public class Janela extends javax.swing.JFrame {
-    private Instancias treinamento;
-    private Instancias teste;
+    private Instancias treinamento=null;
+    private Instancias teste=null;
     private RedeNeural rede;
     
     private int numNeuroniosEntrada;
     private int numNeuroniosSaida;
     private int numNeuroniosOcultos;
+    private int numCamadasOcultas;
+
+    public RedeNeural getRede() {
+        return rede;
+    }
+
+    public void setRede(RedeNeural rede) {
+        this.rede = rede;
+    }
     
     public Janela() {
         initComponents();
@@ -39,21 +49,33 @@ public class Janela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        matbox = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("Abrir");
+        matbox.setColumns(20);
+        matbox.setRows(5);
+        jScrollPane1.setViewportView(matbox);
 
-        jMenuItem1.setText("Conjunto de Treinamento");
+        jLabel1.setText("Matriz:");
+
+        jMenu1.setText("Conjuntos");
+
+        jMenuItem1.setText("Abrir Conjunto de Treinamento");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -61,7 +83,7 @@ public class Janela extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem3.setText("Conjunto de Testes");
+        jMenuItem3.setText("Abrir Conjunto de Testes");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -69,19 +91,27 @@ public class Janela extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
-        jMenuItem5.setText("Separar Conjunto de teste do conjunto de treinamento");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem8.setText("Normalizar Conjuntos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        jMenu1.add(jMenuItem8);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Rede Neural");
 
-        jMenuItem2.setText("treinar");
+        jMenuItem5.setText("Criar Rede Neural");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem2.setText("Treinar");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -89,7 +119,7 @@ public class Janela extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
-        jMenuItem4.setText("teste");
+        jMenuItem4.setText("Teste");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -97,7 +127,7 @@ public class Janela extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem4);
 
-        jMenuItem6.setText("k-cross validation");
+        jMenuItem6.setText("K-Fold Cross Validation");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -107,17 +137,41 @@ public class Janela extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Pesos");
+
+        jMenuItem7.setText("Ajustar Pesos");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -137,9 +191,14 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        rede = new RedeNeural(numNeuroniosEntrada,numNeuroniosOcultos,3,numNeuroniosSaida,new Logistica());
-        treinamento.normalizar(Instancias.NORMALIZAR_ENTRE_0E1);
-        rede.treinamento(treinamento);
+        if(treinamento == null || rede == null){
+            JOptionPane.showMessageDialog(this, "Conjunto de treinamento não carregado ou Rede neural não criada!!");
+        }
+        else{
+            Treinamento t = new Treinamento(this, true, this);
+            t.toFront();
+            t.setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -148,30 +207,23 @@ public class Janela extends javax.swing.JFrame {
             File arquivo = j.getSelectedFile();
             teste = new Instancias();
             teste.abrirArquivo(arquivo);
-            teste.normalizar(Instancias.NORMALIZAR_ENTRE_0E1);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        int[][] matriz = rede.testarRede(teste);
-        for(int i=0;i<matriz.length;i++){
-            for(int j=0;j<matriz[i].length;j++){
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println(" ");
+        if(teste == null){
+            matbox.setText("Não foi encontrado nenhum teste!!");
+        }
+        else{
+            int[][] matriz = rede.testarRede(teste);
+            this.setMatriz(matriz);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        double porcentagem = Double.valueOf(JOptionPane.showInputDialog("Porcentagem: "));
-        teste = treinamento.separarTeste(porcentagem);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         int k = Integer.valueOf(JOptionPane.showInputDialog("k: "));
         int numClasses = treinamento.getNumClasses();
         int[][] acumulada = new int[numClasses][numClasses];
-        treinamento.normalizar(Instancias.NORMALIZAR_ENTRE_0E1);
         for(int i=0;i<numClasses;i++){
             for(int j=0;j<numClasses;j++){
                 acumulada[i][j] = 0;
@@ -196,6 +248,37 @@ public class Janela extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if(treinamento == null){
+            JOptionPane.showMessageDialog(this, "Conjunto de treinamento não carregado!!");
+        }
+        else{
+            CriarRedeNeural c = new CriarRedeNeural(this, true, this, this.numNeuroniosEntrada, this.numNeuroniosOcultos, this.numNeuroniosSaida);
+            c.toFront();
+            c.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        if(rede == null){
+            JOptionPane.showMessageDialog(this, "Rede neural não foi criada!!");
+        }
+        else{
+            AjustarPesos p= new AjustarPesos(this, true, this);
+            p.toFront();
+            p.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        if(teste == null || treinamento == null){
+            JOptionPane.showMessageDialog(this, "É necessário carregar o Conjunto de Testes e Conjunto de Treinamento primeiro!!");
+        }
+        else{
+            this.normalizar();
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     
     public static void main(String[] args){
         Janela j = new Janela();
@@ -203,9 +286,72 @@ public class Janela extends javax.swing.JFrame {
         j.setVisible(true);
     }
     
+    public void criarRedeNeural(int numeroCamadasOcultas, int numeroNeuronicosCamadaOculta, Função f){
+        rede = new RedeNeural(numNeuroniosEntrada,numeroNeuronicosCamadaOculta,numeroCamadasOcultas,numNeuroniosSaida,f);
+        this.numCamadasOcultas =numeroCamadasOcultas;
+        this.numNeuroniosOcultos= numeroNeuronicosCamadaOculta;
+    }
+
+    public int getNumNeuroniosEntrada() {
+        return numNeuroniosEntrada;
+    }
+
+    public void setNumNeuroniosEntrada(int numNeuroniosEntrada) {
+        this.numNeuroniosEntrada = numNeuroniosEntrada;
+    }
+
+    public int getNumNeuroniosSaida() {
+        return numNeuroniosSaida;
+    }
+
+    public void setNumNeuroniosSaida(int numNeuroniosSaida) {
+        this.numNeuroniosSaida = numNeuroniosSaida;
+    }
+
+    public int getNumNeuroniosOcultos() {
+        return numNeuroniosOcultos;
+    }
+
+    public void setNumNeuroniosOcultos(int numNeuroniosOcultos) {
+        this.numNeuroniosOcultos = numNeuroniosOcultos;
+    }
+
+    public int getNumCamadasOcultas() {
+        return numCamadasOcultas;
+    }
+
+    public void setNumCamadasOcultas(int numCamadasOcultas) {
+        this.numCamadasOcultas = numCamadasOcultas;
+    }
+    
+    public double[] getPesos(int camada, int neuronio){
+        return rede.getPesos(camada, neuronio);
+    }
+    
+    public void setMatriz(int [][] m){
+        String s = "";
+        for(int i=0;i<m.length;i++){
+            s += "\n";
+            for(int j=0;j<m[0].length;j++){
+                s += " "+m[i][j];
+            }
+        }
+        matbox.setText(s);
+    }
+    
+    public void treinarRede(){
+        treinamento.embaralhar();
+        rede.treinamento(treinamento);
+    }
+    
+    private void normalizar() {
+       treinamento.normalizar(0, 1, teste);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -213,5 +359,10 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea matbox;
     // End of variables declaration//GEN-END:variables
+
 }

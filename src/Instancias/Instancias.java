@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Instancias;
 
 import Funções.Função;
@@ -25,128 +24,140 @@ import java.util.logging.Logger;
  * @author Matheus Prachedes Batista
  */
 public class Instancias {
+
     public static final int NORMALIZAR_ENTRE_0E1 = 1;
     public static final int NORMALIZAR_ENTRE_M1E1 = 2;
-    
+
     private ArrayList<Instancia> instancias = new ArrayList<>();
-    private HashMap<String,Double[]> mapeamentoSaidas = new HashMap<>(10);
+    private HashMap<String, Double[]> mapeamentoSaidas = new HashMap<>(10);
     private ArrayList<String> classes = new ArrayList<>();
-    
-    private int numClasses=0;
+
+    private int numClasses = 0;
     private int numAtributos = 0;
 
-    public Instancias(){
-        
+    public Instancias() {
+
     }
-    
+
     private Instancias(Instancias copia) {
-        this.instancias = (ArrayList<Instancia>)copia.instancias.clone();
+        this.instancias = (ArrayList<Instancia>) copia.instancias.clone();
         this.mapeamentoSaidas = copia.mapeamentoSaidas;
         this.classes = copia.classes;
         this.numAtributos = copia.numAtributos;
         this.numClasses = copia.numClasses;
     }
-    
-    public void addInstancia(Instancia i){
+
+    public void addInstancia(Instancia i) {
         instancias.add(i);
     }
-    
-    public Instancia getInstancia(int i){
+
+    public Instancia getInstancia(int i) {
         return instancias.get(i);
     }
-    
-    public int size(){
+
+    public int size() {
         return instancias.size();
     }
-    
-    public double[] getAtributos(int i){
+
+    public double[] getAtributos(int i) {
         return instancias.get(i).atributos;
     }
-    
-    public void embaralhar(){
+
+    public void embaralhar() {
         ArrayList<Instancia> novaInstancias = new ArrayList<>();
         Random r = new Random();
-        while(instancias.size() > 0){
+        while (instancias.size() > 0) {
             novaInstancias.add(instancias.remove(r.nextInt(instancias.size())));
         }
         instancias = novaInstancias;
     }
-    
-    public Double[] getSaida(int i){
+
+    public Double[] getSaida(int i) {
         return mapeamentoSaidas.get(instancias.get(i).classe);
     }
-    
-    public boolean abrirArquivo(File arquivo){
+
+    public boolean abrirArquivo(File arquivo) {
         instancias.clear();
-        BufferedReader reader=null;
+        BufferedReader reader = null;
         try {
-            int i,cont=0;
+            int i, cont = 0;
             String classe;
             reader = new BufferedReader(new FileReader(arquivo));
             String linha;
             String[] tokens;
-            
+
             tokens = reader.readLine().split(",");
-            numAtributos = tokens.length-1;
-            while((linha = reader.readLine())!=null){
+            numAtributos = tokens.length - 1;
+            while ((linha = reader.readLine()) != null) {
                 double[] atributos = new double[numAtributos];
                 tokens = linha.split(",");
-                for(i=0;i<numAtributos;i++){
+                for (i = 0; i < numAtributos; i++) {
                     atributos[i] = Double.valueOf(tokens[i]);
                 }
                 classe = tokens[i];
-                instancias.add(new Instancia(atributos,classe));
-                mapeamentoSaidas.putIfAbsent(classe,null);
+                instancias.add(new Instancia(atributos, classe));
+                mapeamentoSaidas.putIfAbsent(classe, null);
             }
             numClasses = mapeamentoSaidas.size();
             reader.close();
-        } catch (IOException ex ) {
+        } catch (IOException ex) {
             instancias.clear();
-            if(reader!=null){
+            if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException ex1) {}
+                } catch (IOException ex1) {
+                }
             }
         }
         return instancias.isEmpty();
-    }   
-    
-    public void normalizar(int forma){
-        switch(forma){
-            case NORMALIZAR_ENTRE_0E1:
-                normalizar(0,1);
-                break;
-            case NORMALIZAR_ENTRE_M1E1:
-                normalizar(-1,1);
-        }
     }
 
-    private void normalizar(double limiteMin,double limiteMax) {
+    public void normalizar(double limiteMin, double limiteMax, Instancias c) {
         int numAtr = instancias.get(0).atributos.length;
         double min[] = new double[numAtr];
         double max[] = new double[numAtr];
-        for(int i=0;i<numAtr;i++){
+        for (int i = 0; i < numAtr; i++) {
             min[i] = Double.MAX_VALUE;
             max[i] = -Double.MAX_VALUE;
         }
-        for(Instancia i : instancias){
+        for (Instancia i : instancias) {
             double[] atributos = i.atributos;
-            for(int cont=0;cont<numAtr;cont++){
-                if(atributos[cont] < min[cont])min[cont] = atributos[cont];
-                if(atributos[cont] > max[cont])max[cont] = atributos[cont];
+            for (int cont = 0; cont < numAtr; cont++) {
+                if (atributos[cont] < min[cont]) {
+                    min[cont] = atributos[cont];
+                }
+                if (atributos[cont] > max[cont]) {
+                    max[cont] = atributos[cont];
+                }
             }
         }
-        for(Instancia i : instancias){
-            i.normalizar(min,max,limiteMin,limiteMax);
+        if (c != null) {
+            for (Instancia i : c.instancias) {
+                double[] atributos = i.atributos;
+                for (int cont = 0; cont < numAtr; cont++) {
+                    if (atributos[cont] < min[cont]) {
+                        min[cont] = atributos[cont];
+                    }
+                    if (atributos[cont] > max[cont]) {
+                        max[cont] = atributos[cont];
+                    }
+                }
+            }
+            for (Instancia i : c.instancias) {
+                i.normalizar(min, max, limiteMin, limiteMax);
+            }
+        }
+        for (Instancia i : instancias) {
+            i.normalizar(min, max, limiteMin, limiteMax);
         }
     }
 
     public void definirSaidasClasses(Função funçãoPropagação) {
         Set<String> valorClasses = mapeamentoSaidas.keySet();
-        int cont=0;
-        for(String i : valorClasses){
+        int cont = 0;
+        for (String i : valorClasses) {
             Double[] saidaClasses = new Double[numAtributos];
-            for(int j=0;j<numAtributos;j++){
+            for (int j = 0; j < numAtributos; j++) {
                 saidaClasses[j] = funçãoPropagação.menorValorImagem();
             }
             saidaClasses[cont++] = funçãoPropagação.maiorValorImagem();
@@ -169,9 +180,9 @@ public class Instancias {
         teste.mapeamentoSaidas = mapeamentoSaidas;
         teste.numAtributos = numAtributos;
         teste.numClasses = numClasses;
-        int tamTeste = (int)(instancias.size()*porcentagem/100d);
+        int tamTeste = (int) (instancias.size() * porcentagem / 100d);
         Random r = new Random();
-        for(int i=0;i<tamTeste;i++){
+        for (int i = 0; i < tamTeste; i++) {
             teste.addInstancia(instancias.remove(r.nextInt(instancias.size())));
         }
         return teste;
@@ -181,12 +192,14 @@ public class Instancias {
         Instancias[] retorno = new Instancias[2];
         retorno[0] = new Instancias(this);
         retorno[1] = new Instancias(this);
-        retorno[1].instancias = new ArrayList<>(instancias.size()/k);
-        for(int j=instancias.size()/k;j>=0;j--){
-            if(j+k*i >= instancias.size())continue;
-            retorno[1].instancias.add(retorno[0].instancias.remove(j+k*i));
+        retorno[1].instancias = new ArrayList<>(instancias.size() / k);
+        for (int j = instancias.size() / k; j >= 0; j--) {
+            if (j + k * i >= instancias.size()) {
+                continue;
+            }
+            retorno[1].instancias.add(retorno[0].instancias.remove(j + k * i));
         }
         return retorno;
     }
-    
+
 }
