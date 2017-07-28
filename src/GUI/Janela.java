@@ -38,6 +38,7 @@ public class Janela extends javax.swing.JFrame {
     
     public Janela() {
         initComponents();
+        matbox.setEditable(false);
     }
 
     /**
@@ -331,10 +332,10 @@ public class Janela extends javax.swing.JFrame {
     public void setMatriz(int [][] m){
         String s = "";
         for(int i=0;i<m.length;i++){
-            s += "\n";
             for(int j=0;j<m[0].length;j++){
-                s += " "+m[i][j];
+                s += "\t"+m[i][j];
             }
+            s += "\n";
         }
         matbox.setText(s);
     }
