@@ -8,7 +8,7 @@ package GUI;
 import Funções.Função;
 import Funções.Logistica;
 import Instancias.Instancias;
-import Neuronio.RedeNeural;
+import RedeNeural.RedeNeural;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -62,7 +62,6 @@ public class Janela extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
 
@@ -127,14 +126,6 @@ public class Janela extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem4);
-
-        jMenuItem6.setText("K-Fold Cross Validation");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
@@ -220,34 +211,6 @@ public class Janela extends javax.swing.JFrame {
             this.setMatriz(matriz);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        int k = Integer.valueOf(JOptionPane.showInputDialog("k: "));
-        int numClasses = treinamento.getNumClasses();
-        int[][] acumulada = new int[numClasses][numClasses];
-        for(int i=0;i<numClasses;i++){
-            for(int j=0;j<numClasses;j++){
-                acumulada[i][j] = 0;
-            }
-        }
-        for(int i=0;i<k;i++){
-            Instancias[] kfold = treinamento.kfold(i,k);
-            RedeNeural r = new RedeNeural(numNeuroniosEntrada, numNeuroniosOcultos, 5, numNeuroniosSaida, new Logistica());
-            r.treinamento(kfold[0]);
-            int[][] resultado = r.testarRede(kfold[1]);
-            for(int j=0;j<numClasses;j++){
-                for(int l=0;l<numClasses;l++){
-                    acumulada[j][l] += resultado[j][l];
-                }
-            }
-        }
-        for(int i=0;i<numClasses;i++){
-            for(int j=0;j<numClasses;j++){
-                System.out.print(acumulada[i][j] + "\t");
-            }
-            System.out.println("");
-        }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         if(treinamento == null){
@@ -359,7 +322,6 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JScrollPane jScrollPane1;

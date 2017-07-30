@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Neuronio;
+package RedeNeural;
 
 import Funções.Função;
 
@@ -124,6 +124,10 @@ public class CamadaProcessamento {
         return soma/2;
     }
 
+    /**
+     * Retorna os pesos do neuronio
+     * @param neuronio Neuronio no qual será retornado os pesos
+     */
     public double[] getPesos(int neuronio) {
         return neuronios[neuronio].pesos;
     }

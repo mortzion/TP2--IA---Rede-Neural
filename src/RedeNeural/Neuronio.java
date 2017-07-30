@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Neuronio;
+package RedeNeural;
 
 import Funções.Função;
 

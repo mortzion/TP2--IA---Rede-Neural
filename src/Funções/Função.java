@@ -6,7 +6,7 @@
 package Funções;
 
 /**
- * Classe abstrata usada para repreesntar uma função de propagação;
+ * Classe abstrata usada para representar uma função de propagação;
  * @author mortz
  */
 public abstract class Função {
@@ -14,8 +14,8 @@ public abstract class Função {
     public abstract double compute(double x);
     /**Calcula f'(x)*/
     public abstract double derivada(double x);
-    
+    /**Menor valor da imagem da função, usada para definir a saida das camadas**/
     public abstract double menorValorImagem();
-    
+    /**Maior valor da imagem da função, usada para definir a saida das camadas**/
     public abstract double maiorValorImagem();
 }

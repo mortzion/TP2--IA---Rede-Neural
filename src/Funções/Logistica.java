@@ -21,13 +21,15 @@ public class Logistica extends Função{
     public double derivada(double x) {
         return compute(x)*(1-compute(x));
     }
-
+    
     @Override
+    /**Menor valor da imagem da função, usada para definir a saida das camadas**/
     public double menorValorImagem() {
         return 0;
     }
 
     @Override
+    /**Maior valor da imagem da função, usada para definir a saida das camadas**/
     public double maiorValorImagem() {
         return 1;
     }

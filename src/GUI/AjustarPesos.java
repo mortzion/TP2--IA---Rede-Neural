@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import Neuronio.RedeNeural;
+import RedeNeural.RedeNeural;
 import javax.swing.DefaultComboBoxModel;
 
 /**

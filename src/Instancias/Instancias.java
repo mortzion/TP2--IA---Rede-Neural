@@ -20,37 +20,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Classe que representa um conjunto de instancias
  * @author Matheus Prachedes Batista
  */
 public class Instancias {
-
     public static final int NORMALIZAR_ENTRE_0E1 = 1;
     public static final int NORMALIZAR_ENTRE_M1E1 = 2;
 
+    /**Instancias  do conjunto**/
     private ArrayList<Instancia> instancias = new ArrayList<>();
+    
+    /**Saida esperada da rede para cada classe
+     * Armazenada para evitar calcular a saida toda hora
+     **/
     private HashMap<String, Double[]> mapeamentoSaidas = new HashMap<>(10);
+    
+    /*Classes do conjunto de instancias*/
     private ArrayList<String> classes = new ArrayList<>();
 
     private int numClasses = 0;
     private int numAtributos = 0;
 
-    public Instancias() {
-
-    }
-
-    private Instancias(Instancias copia) {
-        this.instancias = (ArrayList<Instancia>) copia.instancias.clone();
-        this.mapeamentoSaidas = copia.mapeamentoSaidas;
-        this.classes = copia.classes;
-        this.numAtributos = copia.numAtributos;
-        this.numClasses = copia.numClasses;
-    }
-
-    public void addInstancia(Instancia i) {
-        instancias.add(i);
-    }
-
+    public Instancias(){}
+  
     public Instancia getInstancia(int i) {
         return instancias.get(i);
     }
@@ -58,11 +50,13 @@ public class Instancias {
     public int size() {
         return instancias.size();
     }
-
+    
+    /**Retorna os atributos da instancia i**/
     public double[] getAtributos(int i) {
         return instancias.get(i).atributos;
     }
 
+    /**Embaralha o conjunto de instancias**/
     public void embaralhar() {
         ArrayList<Instancia> novaInstancias = new ArrayList<>();
         Random r = new Random();
@@ -72,10 +66,12 @@ public class Instancias {
         instancias = novaInstancias;
     }
 
+    /**Retorna a saida esperada da rede para a instancia i**/
     public Double[] getSaida(int i) {
         return mapeamentoSaidas.get(instancias.get(i).classe);
     }
-
+    
+    /**Abre o arquivo especificado pelo parametro e carrega as instancias**/
     public boolean abrirArquivo(File arquivo) {
         instancias.clear();
         BufferedReader reader = null;
@@ -112,17 +108,15 @@ public class Instancias {
         return instancias.isEmpty();
     }
 
-    public void normalizar(double limiteMin, double limiteMax, Instancias c) {
-        int numAtr = instancias.get(0).atributos.length;
-        double min[] = new double[numAtr];
-        double max[] = new double[numAtr];
-        for (int i = 0; i < numAtr; i++) {
-            min[i] = Double.MAX_VALUE;
-            max[i] = -Double.MAX_VALUE;
-        }
-        for (Instancia i : instancias) {
+    /**
+     * Recupera o minimo e maximo de cada atributo do conjunto 'c' e retorna nos vetores
+     * de entrada
+     */
+    private static void recuperaMinMax(double[] min, double[]max, Instancias c){
+        if(c==null)return;
+        for(Instancia i : c.instancias){
             double[] atributos = i.atributos;
-            for (int cont = 0; cont < numAtr; cont++) {
+            for (int cont = 0; cont < atributos.length; cont++) {
                 if (atributos[cont] < min[cont]) {
                     min[cont] = atributos[cont];
                 }
@@ -131,27 +125,45 @@ public class Instancias {
                 }
             }
         }
-        if (c != null) {
-            for (Instancia i : c.instancias) {
-                double[] atributos = i.atributos;
-                for (int cont = 0; cont < numAtr; cont++) {
-                    if (atributos[cont] < min[cont]) {
-                        min[cont] = atributos[cont];
-                    }
-                    if (atributos[cont] > max[cont]) {
-                        max[cont] = atributos[cont];
-                    }
-                }
-            }
-            for (Instancia i : c.instancias) {
-                i.normalizar(min, max, limiteMin, limiteMax);
-            }
-        }
-        for (Instancia i : instancias) {
+    }
+    
+    /**
+     * Normaliza cada instancia do conjunto 'c'
+     * @param min menor valor de cada atributo do conjunto
+     * @param max maior valor de cada stributo do conjunto
+     * @param limiteMin menor valor do intervalo após normalização
+     * @param limiteMax maior valor do intervalo após normalização
+     * @param c conjunto que será normalizado
+     */
+    private static void normaliza(double[] min, double[] max, double limiteMin, double limiteMax, Instancias c){
+        if(c == null)return;
+        for(Instancia i : c.instancias){
             i.normalizar(min, max, limiteMin, limiteMax);
         }
     }
+    
+    /**
+     * Normaliza este conjunto para que os atributos estejam entre [limiteMin,limiteMax]
+     * @param c Conjunto que será normalizado junto com este.
+     */
+    public void normalizar(double limiteMin, double limiteMax, Instancias c) {
+        int numAtr = instancias.get(0).atributos.length;
+        double min[] = new double[numAtr];
+        double max[] = new double[numAtr];
+        for (int i = 0; i < numAtr; i++) {
+            min[i] = Double.MAX_VALUE;
+            max[i] = -Double.MAX_VALUE;
+        }
+        recuperaMinMax(min, max, this);
+        recuperaMinMax(min,max,c);
+        normaliza(min,max,limiteMin,limiteMax,c);
+        normaliza(min,max,limiteMin,limiteMax,this);
+    }
 
+    /**
+     * Define as saidas esperadas pela rede para cada classe do conjunto.
+     * @param funçãoPropagação A função é usada para definir o minimo e o maximo da saida.
+     */
     public void definirSaidasClasses(Função funçãoPropagação) {
         Set<String> valorClasses = mapeamentoSaidas.keySet();
         int cont = 0;
@@ -173,33 +185,4 @@ public class Instancias {
     public int getIndexClasse(int i) {
         return classes.indexOf(instancias.get(i).classe);
     }
-
-    public Instancias separarTeste(double porcentagem) {
-        Instancias teste = new Instancias();
-        teste.classes = classes;
-        teste.mapeamentoSaidas = mapeamentoSaidas;
-        teste.numAtributos = numAtributos;
-        teste.numClasses = numClasses;
-        int tamTeste = (int) (instancias.size() * porcentagem / 100d);
-        Random r = new Random();
-        for (int i = 0; i < tamTeste; i++) {
-            teste.addInstancia(instancias.remove(r.nextInt(instancias.size())));
-        }
-        return teste;
-    }
-
-    public Instancias[] kfold(int i, int k) {
-        Instancias[] retorno = new Instancias[2];
-        retorno[0] = new Instancias(this);
-        retorno[1] = new Instancias(this);
-        retorno[1].instancias = new ArrayList<>(instancias.size() / k);
-        for (int j = instancias.size() / k; j >= 0; j--) {
-            if (j + k * i >= instancias.size()) {
-                continue;
-            }
-            retorno[1].instancias.add(retorno[0].instancias.remove(j + k * i));
-        }
-        return retorno;
-    }
-
 }

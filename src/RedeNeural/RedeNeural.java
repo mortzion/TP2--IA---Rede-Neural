@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Neuronio;
+package RedeNeural;
 
 import Instancias.Instancias;
 import Funções.Função;
@@ -123,7 +123,12 @@ public class RedeNeural {
         }
         
     }
-    //arrumar
+    
+    /**
+     * Testa a rede com o conjunto do parametro e retorna a matriz de confusão
+     * @param instancias conjunto de testes
+     * @return matriz de confusão
+     */
     public int[][] testarRede(Instancias instancias){
         int numClasses = instancias.getNumClasses();
         instancias.definirSaidasClasses(funçãoPropagação);
@@ -166,6 +171,11 @@ public class RedeNeural {
         return saida.erroRede();
     }
 
+    /**
+     * Verifica em qual indice se encontra a maior valor na saida da rede
+     * @param saida
+     * @return 
+     */
     private int indexMaiorSinalSaida(double[] saida) {
         int pos=0;
         double maior = Integer.MIN_VALUE;
@@ -178,6 +188,12 @@ public class RedeNeural {
         return pos;
     }
 
+    /**
+     * Retorna os pesos de um neuronio
+     * @param camada indice da camada
+     * @param neuronio indice do neuronio
+     * @return 
+     */
     public double[] getPesos(int camada, int neuronio) {
         if(oculta.length == camada) return saida.getPesos(neuronio);
         return oculta[camada].getPesos(neuronio);
