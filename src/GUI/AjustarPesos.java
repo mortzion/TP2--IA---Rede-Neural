@@ -5,12 +5,8 @@
  */
 package GUI;
 
-<<<<<<< HEAD
 import RedeNeural.RedeNeural;
-=======
-import Neuronio.RedeNeural;
 import javax.swing.DefaultComboBoxModel;
->>>>>>> a3f165b2e2412af7599f4cc4f524f1846ed81806
 
 /**
  *
