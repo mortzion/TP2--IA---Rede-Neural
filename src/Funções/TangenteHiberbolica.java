@@ -23,11 +23,13 @@ public class TangenteHiberbolica extends Função{
     }
 
     @Override
+    /**Menor valor da imagem da função, usada para definir a saida das camadas**/
     public double menorValorImagem() {
         return -1;
     }
 
     @Override
+    /**Maior valor da imagem da função, usada para definir a saida das camadas**/
     public double maiorValorImagem() {
         return 1;
     }

@@ -21,16 +21,14 @@ public class Instancia {
         this.classe = classe;
     }
     
-    /*
-    public Instancia(double[] atributos, int classe){
-        this.atributos = atributos;
-        this.saida = new double[5];
-        for(int i=0;i<saida.length;i++){
-            saida[i] = 0;
-        }
-        saida[classe-1] = 1;
-    }
-    */
+    /**
+     * Normaliza os atributos desta instancia de modo que os atributos do conjunto
+     * estejam no intervalo [limiteMin, limiteMax]
+     * @param min menor valor de cada atributo no conjunto
+     * @param max maior valor de cada atributos no conjunto
+     * @param limiteMin limiteMin da normalização
+     * @param limiteMax limiteMax da normalização
+     */
     protected void normalizar(double[] min, double[] max,double limiteMin, double limiteMax) {
         for(int i=0;i<atributos.length;i++){
             atributos[i] = ((atributos[i]-min[i])/(max[i]-min[i]))*(limiteMax-limiteMin)+limiteMin;
