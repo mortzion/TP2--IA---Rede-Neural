@@ -71,7 +71,7 @@ public class Janela extends javax.swing.JFrame {
         matbox.setRows(5);
         jScrollPane1.setViewportView(matbox);
 
-        jLabel1.setText("Matriz:");
+        jLabel1.setText("Matriz de Confusão:");
 
         jMenu1.setText("Conjuntos");
 
@@ -217,6 +217,7 @@ public class Janela extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Conjunto de treinamento não carregado!!");
         }
         else{
+            numNeuroniosOcultos = (int)Math.round(Math.sqrt(numNeuroniosEntrada * numNeuroniosSaida));
             CriarRedeNeural c = new CriarRedeNeural(this, true, this, this.numNeuroniosEntrada, this.numNeuroniosOcultos, this.numNeuroniosSaida);
             c.toFront();
             c.setVisible(true);

@@ -73,7 +73,7 @@ public class CriarRedeNeural extends javax.swing.JDialog {
         jRadioButton2.setText("Logística");
 
         jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Tanjente Hiberbólica");
+        jRadioButton1.setText("Tangente Hiberbólica");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

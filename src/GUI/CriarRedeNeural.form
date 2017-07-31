@@ -156,7 +156,7 @@
         <Component class="javax.swing.JRadioButton" name="jRadioButton1">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Tanjente Hiberb&#xf3;lica"/>
+            <Property name="text" type="java.lang.String" value="Tangente Hiberb&#xf3;lica"/>
           </Properties>
         </Component>
       </SubComponents>
