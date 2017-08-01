@@ -159,8 +159,8 @@ public class Instancias {
         Set<String> valorClasses = mapeamentoSaidas.keySet();
         int cont = 0;
         for (String i : valorClasses) {
-            Double[] saidaClasses = new Double[numAtributos];
-            for (int j = 0; j < numAtributos; j++) {
+            Double[] saidaClasses = new Double[mapeamentoSaidas.size()];
+            for (int j = 0; j < mapeamentoSaidas.size(); j++) {
                 saidaClasses[j] = funçãoPropagação.menorValorImagem();
             }
             saidaClasses[cont++] = funçãoPropagação.maiorValorImagem();
