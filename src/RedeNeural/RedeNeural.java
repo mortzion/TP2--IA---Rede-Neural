@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package RedeNeural;
 
 import Instancias.Instancias;
@@ -18,10 +12,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *
- * @author Matheus Prachedes Batista
- */
 public class RedeNeural {
     /**Usado para gerar os pesos aleatorios dos neuronios*/
     public static final Random rand = new Random();
@@ -222,8 +212,4 @@ public class RedeNeural {
     public void setLimiar(double limiar) {
         this.limiar = limiar;
     }
-
-    
-    
-
 }

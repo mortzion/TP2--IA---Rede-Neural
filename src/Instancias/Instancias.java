@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Instancias;
 
 import Funções.Função;
@@ -19,20 +14,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Classe que representa um conjunto de instancias
- * @author Matheus Prachedes Batista
- */
+/*Classe que representa um conjunto de instancias*/
 public class Instancias {
     public static final int NORMALIZAR_ENTRE_0E1 = 1;
     public static final int NORMALIZAR_ENTRE_M1E1 = 2;
 
-    /**Instancias  do conjunto**/
+    /*Instancias  do conjunto*/
     private ArrayList<Instancia> instancias = new ArrayList<>();
     
     /**Saida esperada da rede para cada classe
-     * Armazenada para evitar calcular a saida toda hora
-     **/
+     *Armazenada para evitar calcular a saida toda hora*/
     private HashMap<String, Double[]> mapeamentoSaidas = new HashMap<>(10);
     
     /*Classes do conjunto de instancias*/
@@ -51,12 +42,12 @@ public class Instancias {
         return instancias.size();
     }
     
-    /**Retorna os atributos da instancia i**/
+    /*Retorna os atributos da instancia i*/
     public double[] getAtributos(int i) {
         return instancias.get(i).atributos;
     }
 
-    /**Embaralha o conjunto de instancias**/
+    /*Embaralha o conjunto de instancias*/
     public void embaralhar() {
         ArrayList<Instancia> novaInstancias = new ArrayList<>();
         Random r = new Random();

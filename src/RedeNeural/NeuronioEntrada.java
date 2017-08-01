@@ -8,10 +8,6 @@ package RedeNeural;
 
 import Funções.Função;
 
-/**
- *
- * @author Matheus Prachedes Batista
- */
 public class NeuronioEntrada{
     
 }

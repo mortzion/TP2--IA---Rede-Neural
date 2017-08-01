@@ -8,7 +8,6 @@ package RedeNeural;
 
 /**
  * Representa a camada de entrada
- * @author Matheus Prachedes Batista
  */
 public class CamadaEntrada {
 

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package RedeNeural;
 
 import Funções.Função;
@@ -11,17 +5,12 @@ import Funções.Função;
 /**
  *  Representa uma cada de processamento, podendo ser tanto uma camada oculta 
  *  quanto uma camada de saida.
- * @author Matheus Prachedes Batista
  */
 public class CamadaProcessamento {
-    /**
-     * Conjunto de neuronios desta camada
-     */
+    /*Conjunto de neuronios desta camada*/
     protected Neuronio[] neuronios;
     
-    /**
-     * Armazena os erros calculados pelos neuronios desta camada para uso futuro
-     */
+    /*Armazena os erros calculados pelos neuronios desta camada para uso futuro*/
     protected double[] erros;
     
     /**
@@ -131,7 +120,4 @@ public class CamadaProcessamento {
     public double[] getPesos(int neuronio) {
         return neuronios[neuronio].pesos;
     }
-
-    
-    
 }

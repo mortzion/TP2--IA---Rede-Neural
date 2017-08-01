@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package RedeNeural;
 
 import Funções.Função;
 
 
-/**
- *  Classe que representa um neuronio da rede
- * @author Matheus Prachedes Batista
- */
+/*Classe que representa um neuronio da rede*/
 public class Neuronio {
     /**Função de propagação utilizada neste neuronio*/
     protected Função funçãoPropagação;
